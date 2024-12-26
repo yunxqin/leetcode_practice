@@ -21,14 +21,15 @@ class Solution:
             - 如果 pivot = pivot2，那么 nums2[0 .. k/2-1] 都不可能是第 k 小的元素。把这些元素全部 "删除"，剩下的作为新的 nums2 数组
             - 由于我们 "删除" 了一些元素（这些元素都比第 k 小的元素要小），因此需要修改 k 的值，减去删除的数的个数
             """
-            
+            # global m,n
             print(f"k: {k}\n")
             index1, index2 = 0, 0
 
-            #m, n = len(nums1), len(nums2)
+            # nm, nn = len(nums1), len(nums2)
+
             while True:
                 # 特殊情况
-                print(f"index1: {index1} index2: {index2}")
+                # print(f"index1: {index1} index2: {index2}")
                 if index1 == m:
                     return nums2[index2 + k - 1]
                 if index2 == n:
@@ -37,22 +38,23 @@ class Solution:
                     return min(nums1[index1], nums2[index2])
 
                 # 正常情况
-                newIndex1 = min(index1 + k // 2 - 1, m - 1)
-                newIndex2 = min(index2 + k // 2 - 1, n - 1)
+                newIndex1 = min(index1+k // 2 - 1, n - 1)
+                newIndex2 = min(index2+k // 2 - 1, m - 1)
                 print(f"nums1:{nums1[index1:newIndex1+1]} \nnums2:{nums2[index2:newIndex2+1]}")
-                print(f"newIndex1: {newIndex1} newIndex2: {newIndex2}")
+                # print(f"newIndex1: {newIndex1} newIndex2: {newIndex2}")
                 pivot1, pivot2 = nums1[newIndex1], nums2[newIndex2]
                 print(f"pivot1: {pivot1}  pivot2: {pivot2}")
                 if pivot1 <= pivot2:
-                    k -= newIndex1 - index1 + 1
+                    k -= newIndex1-index1+1
                     print(f"k: {k}")
                     index1 = newIndex1 + 1
-                    print(f"index1: {index2}")
+                    # print(f"index1: {index1}")
                 else:
-                    k -= newIndex2 - index2 + 1
+                    k -= newIndex2-index2+1
+                    # nums2=nums2[newIndex2:]
                     print(f"k: {k}")
                     index2 = newIndex2 + 1
-                    print(f"index2: {index2}")
+                    # print(f"index2: {index2}")
                 print("\n")
         m, n = len(nums1), len(nums2)
         print(f"m: {m}  n: {n}")
