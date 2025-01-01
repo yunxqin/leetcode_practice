@@ -13,8 +13,8 @@ class Solution:
             INT_MAX_list.insert(0,INT_MAX%10)
             INT_MAX=int(INT_MAX/10)
         print(INT_MAX)
-        INT_MIN_list=INT_MAX_list
-        INT_MIN_list[-1]=INT_MIN_list[-1]-1
+        INT_MIN_list=[_ for _ in INT_MAX_list]
+        INT_MIN_list[-1]=INT_MAX_list[-1]-1
 
         print(f"INT_MIN_list:{INT_MIN_list}\nINT_MAX_list:{INT_MAX_list}")
         # INT_MIN_=-INT_MIN
@@ -71,7 +71,7 @@ class Solution:
                         x_result+=10**(len(x_list))*x_list[i] 
                     else:
                         return 0
-                    return x_result
+                return x_result
             else:
                 ##负数 
                 for i in range(len(INT_MIN_list)):
@@ -81,9 +81,10 @@ class Solution:
                         x_result+=10**(len(x_list))*x_list[i] 
                     else:
                         return 0
-                    return -x_result   
+                return -x_result
 
 a=Solution()
 
 b=2147483641
+b=-2147483412
 print(a.reverse(b))

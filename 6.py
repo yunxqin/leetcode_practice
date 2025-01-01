@@ -28,7 +28,8 @@ class Solution:
                 else:
                     line_+=1
                     flag=numRows-2
-                    while flag>=1:
+                    # print(f"line_: {line_} flag: {flag} i:{i}")
+                    while flag>=1 and line_<len(z_s[0]) and i<len(s):
                         z_s[flag][line_]=s[i]
                         flag-=1
                         line_+=1
@@ -45,10 +46,10 @@ class Solution:
                     result+=z_s[row][line]
         print(result)
         return result
-s="PAYPALISHIRING"
-s="A"
+s="ABCDE"
+s="ABCDE"
 print(len(s))
-numRows=1
+numRows=4
 a=Solution()
 a.convert(s,numRows)
             # for i in range(0,len(s)):

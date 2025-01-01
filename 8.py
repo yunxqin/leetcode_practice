@@ -13,6 +13,8 @@ class Solution:
         #丢弃无用的前导空格
         i=0
         bl_num=0
+        if len(s)==0:
+            return 0
         while i<len(s):
             if s[i]==" ":
                 # s=s[1:]
@@ -21,22 +23,18 @@ class Solution:
             elif s[i]!=" ":
                 break
         s=s[bl_num:]
+        if len(s)==0:
+            return 0
         print(s)    
         #判断正负号
         neg_or_pos=0
         if s[0]=="-":
             neg_or_pos=1
             s=s[1:]
-            
-        # #判断符号
-        # i=0
-        # neg_or_pos=0
-        # while not s[i].isdigit() and i < len(s):
-        #     if s[i]=="-":
-        #         neg_or_pos=1
-
-        #     i+=1
-        # ###得到符号
+        elif s[0]=="+":
+            s=s[1:]
+        if len(s)==0:
+            return 0
 
         #如果下一个不是数字 返回0
         if not s[0].isdigit():
@@ -62,20 +60,22 @@ class Solution:
                 flag=1
                 i+=1
             elif not s[i].isdigit() and flag==0:
-                i+=1
-                continue
+                # i+=1
+                return 0
+                # continue
             elif not s[i].isdigit() and flag==1:
                 break
         print(f"num_result_list: {num_result_list}")
         #得到最终的数字字符串num_result_list  （正序）["1","2","3"]->123
         #判断是否溢出
         INT_MAX=2**31-1
+        INT_MAX_=INT_MAX
         INT_MIN=-2**31
         INT_MIN_list=[]
         INT_MAX_list=[]
-        while INT_MAX !=0:
+        while INT_MAX_ !=0:
             INT_MAX_list.insert(0,INT_MAX%10)
-            INT_MAX=int(INT_MAX/10)
+            INT_MAX_=int(INT_MAX_/10)
 
         INT_MIN_list=INT_MAX_list
         INT_MIN_list[-1]=INT_MIN_list[-1]-1
@@ -83,7 +83,8 @@ class Solution:
         def calculate_result(x_list):
             x_result=0
             for i in range(len(x_list)):
-                x_result+=10**(len(x_list)-i-1)*x_list[i]           
+                x_result+=10**(len(x_list)-i-1)*x_list[i]    
+            print(x_result)       
             return x_result
         if len(num_result_list)<len(INT_MAX_list):
             for i in range(len(num_result_list)):
@@ -93,29 +94,27 @@ class Solution:
             else:
                 return -x_result
         else:
+            #判断如果字符串数量大于最大值的数量
+            #正数的情况     
+            #直接计算得数 
             if neg_or_pos==0:
-                for i in range(len(INT_MAX_list)):
-                    if INT_MAX_list[i]>num_result_list[i]:
-                        return calculate_result(num_result_list)
-                    elif INT_MAX_list[i]==num_result_list[i]:
-                        x_result+=10**(len(num_result_list))*num_result_list[i] 
-                    else:
-                        return 0
-                    return x_result
+                for i in range(len(num_result_list)):
+                    x_result+=10**(len(num_result_list)-i-1)*num_result_list[i]  
+                    if x_result > INT_MAX:
+                        return INT_MAX
+                return x_result
             else:
                 ##负数 
-                for i in range(len(INT_MIN_list)):
-                    if INT_MIN_list[i]>num_result_list[i]:
-                        return -calculate_result(num_result_list)
-                    elif INT_MIN_list[i]==num_result_list[i]:
-                        x_result+=10**(len(num_result_list))*num_result_list[i] 
-                    else:
-                        return 0
-                    return -x_result        
+                for i in range(len(num_result_list)):
+                    x_result+=10**(len(num_result_list)-i-1)*num_result_list[i]  
+                    if x_result > -INT_MIN:
+                        return INT_MIN
+                return -x_result   
 
 a=Solution()
 b="words and 987" 
 b="   -042" 
+b="21474836460"
 c=a.myAtoi(b)
 print(c)
 
